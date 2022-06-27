@@ -1,0 +1,96 @@
+main() =>runApp(myApp());
+
+class myApp extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return MaterialApp(
+      title: "ChapterFourCode",
+      home: Scaffold(
+
+        appBar:AppBar(
+          title: Text("ChapterSevenCode"),
+        ),
+        body: ChapterFour(),
+      ),
+    );
+  }
+}
+
+class ChapterFour extends StatefulWidget{
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return MyHomePage();
+  }
+}
+
+class MyHomePage extends State<ChapterFour>{
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return ThemeTestRoute();
+  }
+}
+
+
+class ThemeTestRoute extends StatefulWidget {
+  @override
+  _ThemeTestRouteState createState() => _ThemeTestRouteState();
+}
+
+class _ThemeTestRouteState extends State<ThemeTestRoute> {
+  var _themeColor = Colors.teal;
+
+  @override
+  Widget build(BuildContext context) {
+    ThemeData themeData = Theme.of(context);
+    return Theme(
+      data: ThemeData(
+          primarySwatch: _themeColor,
+          iconTheme: IconThemeData(color: _themeColor)
+      ),
+      child: Scaffold(
+        appBar: AppBar(title: Text("主题测试")),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Image.network("https://book.flutterchina.club/assets/img/logo.png",),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Icon(Icons.favorite),
+                  Icon(Icons.airport_shuttle),
+                  Text("  颜色跟随主题"),
+                  Icon(Icons.live_tv,size: 50,color: Colors.blue,)
+                ]
+            ),
+            Theme(
+              data: themeData.copyWith(
+                iconTheme: themeData.iconTheme.copyWith(
+                    color: Colors.black
+                ),
+              ),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(Icons.favorite),
+                    Icon(Icons.airport_shuttle),
+                    Text("  颜色固定黑色")
+                  ]
+              ),
+            ),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+            onPressed: () =>
+            setState(() =>
+            _themeColor =
+            _themeColor == Colors.teal ? Colors.blue : Colors.teal
+            ),
+            child: Icon(Icons.palette)
+        ),
+      ),
+    );
+  }
+}
