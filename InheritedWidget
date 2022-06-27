@@ -1,0 +1,103 @@
+main() =>runApp(myApp());
+
+class myApp extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return MaterialApp(
+      title: "ChapterFourCode",
+      home: Scaffold(
+
+        appBar:AppBar(
+          title: Text("ChapterSevenCode"),
+        ),
+        body: ChapterFour(),
+      ),
+    );
+  }
+}
+
+class ChapterFour extends StatefulWidget{
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return MyHomePage();
+  }
+}
+
+class MyHomePage extends State<ChapterFour>{
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return InheritedWidgetTestRoute();
+  }
+}
+
+class ShareDataWidget extends InheritedWidget {
+  ShareDataWidget({
+    Key? key,
+    required this.data,
+    required Widget child,
+  }) : super(key: key, child: child);
+
+  final int data; 
+  
+  static ShareDataWidget? of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<ShareDataWidget>();
+  }
+  
+  @override
+  bool updateShouldNotify(ShareDataWidget old) {
+    return old.data != data;
+  }
+}
+class _TestWidget extends StatefulWidget {
+  @override
+  __TestWidgetState createState() => __TestWidgetState();
+}
+
+class __TestWidgetState extends State<_TestWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return Text(ShareDataWidget.of(context)!.data.toString());
+  }
+
+  @override 
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    print("Dependencies change");
+  }
+}
+
+class InheritedWidgetTestRoute extends StatefulWidget {
+  @override
+  _InheritedWidgetTestRouteState createState() => _InheritedWidgetTestRouteState();
+}
+
+class _InheritedWidgetTestRouteState extends State<InheritedWidgetTestRoute> {
+  int count = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return  Center(
+      child: ShareDataWidget( 
+        data: count,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Image.network("https://img0.baidu.com/it/u=4062933228,889522494&fm=253&fmt=auto&app=138&f=JPEG?w=603&h=500",width: 150,height: 150,),
+            Icon(Icons.phone_android,color: Colors.blue,size: 50,),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 20.0),
+              child: _TestWidget(),
+            ),
+            ElevatedButton(
+              child: Text("Increment"),
+              onPressed: () => setState(() => ++count),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
