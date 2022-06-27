@@ -1,0 +1,78 @@
+main() =>runApp(myApp());
+
+class myApp extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return MaterialApp(
+      title: "ChapterFourCode",
+      home: Scaffold(
+
+        appBar:AppBar(
+          title: Text("ChapterSevenCode"),
+        ),
+        body: ChapterFour(),
+      ),
+    );
+  }
+}
+
+class ChapterFour extends StatefulWidget{
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return MyHomePage();
+  }
+}
+
+class MyHomePage extends State<ChapterFour>{
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return ValueListenableRoute();
+  }
+}
+
+class ValueListenableRoute extends StatefulWidget {
+  const ValueListenableRoute({Key? key}) : super(key: key);
+
+  @override
+  State<ValueListenableRoute> createState() => _ValueListenableState();
+}
+
+class _ValueListenableState extends State<ValueListenableRoute> {
+  final ValueNotifier<int> _counter = ValueNotifier<int>(0);
+  static const double textScaleFactor = 1.5;
+
+  @override
+  Widget build(BuildContext context) {
+    print('build');
+    return Scaffold(
+      appBar: AppBar(title: Text('ValueListenableBuilder 测试')),
+      body: Center(
+        child: ValueListenableBuilder<int>(
+          builder: (BuildContext context, int value, Widget? child) {
+            return Column(
+              children: [
+                Image.network("https://img0.baidu.com/it/u=3458802889,3239959484&fm=253&fmt=auto&app=138&f=JPEG?w=400&h=400",width: 200,height: 200,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    child!,
+                    Text('$value 次',textScaleFactor: textScaleFactor),
+                  ],
+                ),
+              ],
+            );
+          },
+          valueListenable: _counter,
+          child: const Text('点击了 ', textScaleFactor: textScaleFactor),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () => _counter.value += 1,
+      ),
+    );
+  }
+}
